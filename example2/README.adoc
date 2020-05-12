@@ -8,12 +8,23 @@
 flex example2.l
 bison -d example2.y
 
-gcc example2.tab.c lex.yy.c -lfl
+gcc example2.tab.c lex.yy.c -o calc -lfl
+./calc
+
+# 3+3 # user input
+# =9  # result
+# 6*9 # user input
+# =54 # result
+# Ctrl+D or Ctrl+C to exit
 ----
 
 * `-l<library>` or `-l <library>`
 +
 Search the library named library when linking. The `-l` option is passed directly to the linker by GCC.<<gcc>>  因此 `-lfl` 代表叫linker去找一個叫 `libfl` 的library
+
+=== Result
+
+image::example2.png[]
 
 
 [bibliography]
