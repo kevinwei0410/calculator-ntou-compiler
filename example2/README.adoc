@@ -1,0 +1,22 @@
+= Example 2
+蔡宇軒
+
+== Compiling
+
+[source,sh]
+----
+flex example2.l
+bison -d example2.y
+
+gcc example2.tab.c lex.yy.c -lfl
+----
+
+* `-l<library>` or `-l <library>`
++
+Search the library named library when linking. The `-l` option is passed directly to the linker by GCC.<<gcc>>  因此 `-lfl` 代表叫linker去找一個叫 `libfl` 的library
+
+
+[bibliography]
+== References
+
+ - [[[gcc,1]]] https://gcc.gnu.org/onlinedocs/gcc/Link-Options.html

@@ -1,0 +1,15 @@
+= Example 1
+
+== Compile and Execute
+
+[source,sh]
+----
+flex example1.l
+
+gcc lex.yy.c -o token -lfl
+./token < testCode.txt
+----
+
+=== Result
+
+image::example1-result.png[]
