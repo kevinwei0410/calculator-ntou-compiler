@@ -1,0 +1,8 @@
+[Bb]uild
+[Oo]ut
+
+*.out
+*.exe
+
+*.c
+*.h
