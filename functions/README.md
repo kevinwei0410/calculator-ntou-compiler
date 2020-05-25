@@ -6,4 +6,4 @@ $bison -d yacc.y
 $flex lex.l
 $gcc yacc.tab.c lex.yy.c -lm -o scientific-calc
 ```
-don't care waening
+don't care warning
