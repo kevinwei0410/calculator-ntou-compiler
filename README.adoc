@@ -12,3 +12,22 @@
 |00757302  |林維新
 |===
 
+== Build
+
+=== Commands
+
+....
+flex lex.l
+bison -d yacc.y
+gcc -I./ -lm *.c -o calculator
+./calculator
+....
+
+=== GNU Make
+
+Download for Windows: http://gnuwin32.sourceforge.net/packages/make.htm
+
+....
+make # to build
+make clean # to clean
+....
