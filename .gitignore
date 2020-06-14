@@ -3,7 +3,7 @@
 
 *.out
 *.exe
-calc
+calc*
 
 *.c
 *.h

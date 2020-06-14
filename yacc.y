@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include "func.h"
+#include "functions.h"
 #include "yacc.tab.h"
 
 
