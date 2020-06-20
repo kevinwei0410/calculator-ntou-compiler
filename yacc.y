@@ -33,7 +33,7 @@ int yyerror(const char *s);
 %type<num> constant
 %type<num> expr
 %type<num> function
-%type<num> log_function
+%type<num> logarithm
 
 /* Set operator precedence, follows BODMAS rules. */
 %left SUB
@@ -51,8 +51,8 @@ input:
 	;
 	
 line: 
-	  EOL              { printf("Please enter a calculation:\n"); }
-	| calculation EOL  { printf("=%.2f\n",$1); }
+	  EOL              { fprintf(stdout, "Please enter a math expression:\n"); }
+	| calculation EOL  { fprintf(stdout, "= %.2f\n",$1); }
 	;
 
 calculation:
@@ -61,35 +61,42 @@ calculation:
 	;
 		
 constant:
-	PI { $$ = 3.142; }
+	PI { $$ = 3.141592653589793; }
 	;
 		
 expr:
-	SUB expr			{ $$ = -$2; }
-	| NUMBER            { $$ = $1; }
+	SUB expr                  { $$ = -$2; }
+	| NUMBER                  { $$ = $1; }
 	| constant
-	| function
-	| expr DIV expr     { if ($3 == 0) { yyerror("Cannot divide by zero"); exit(1); } else $$ = $1 / $3; }
-	| expr MUL expr     { $$ = $1 * $3; }
+	| expr DIV expr           {
+		if ($3 == 0) {
+			yyerror("Cannot divide by zero");
+			exit(1);
+		} else {
+			$$ = $1 / $3;
+		}
+	}
+	| expr MUL expr            { $$ = $1 * $3; }
 	| L_BRACKET expr R_BRACKET { $$ = $2; }
-	| expr ADD expr     { $$ = $1 + $3; }
-	| expr SUB expr   	{ $$ = $1 - $3; }
-	| expr POW expr     { $$ = pow($1, $3); }
-	| expr MOD expr     { $$ = modulo($1, $3); }
+	| expr ADD expr            { $$ = $1 + $3; }
+	| expr SUB expr            { $$ = $1 - $3; }
+	| expr POW expr            { $$ = pow($1, $3); }
+	| expr MOD expr            { $$ = modulo($1, $3); }
+	| function
 	;
 		
 function: 
-	 log_function
-	| SQRT expr      		{ $$ = sqrt($2); }
-	| expr FACTORIAL		{ $$ = factorial($1); }
-	| ABS expr 					{ $$ = fabs($2); }
-	| FLOOR expr 				{ $$ = floor($2); }
-	| CEIL expr 				{ $$ = ceil($2); }
+	  logarithm
+	| SQRT expr      { $$ = sqrt($2); }
+	| expr FACTORIAL { $$ = factorial($1); }
+	| ABS expr       { $$ = fabs($2); }
+	| FLOOR expr     { $$ = floor($2); }
+	| CEIL expr      { $$ = ceil($2); }
 	;
 	
-log_function:
-	LOG2 expr 			{ $$ = log2($2); }
-	| LOG10 expr 		{ $$ = log10($2); }
+logarithm:
+	LOG2 expr        { $$ = log2($2); }
+	| LOG10 expr     { $$ = log10($2); }
 	;
 %%
 
