@@ -49,6 +49,7 @@ DIGIT [0-9]
 ("cos")|("COS")                   { return COS; }
 ("sin")|("SIN")                   { return SIN; }
 ("tan")|("TAN")                   { return TAN; }
+"exp"                             { return EXP; }
 ("var")|("VAR")                   { return VAR_KEYWORD; }
 [a-zA-Z0-9]+                      { yylval.index = add_variable(yytext); return VARIABLE; }
 [\n|\n\r]                         { return EOL; }

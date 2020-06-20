@@ -27,6 +27,7 @@ int yyerror(const char *s);
 %token<num> EQUALS
 %token<num> PI E
 %token<num> POW SQRT FACTORIAL MOD
+%token<num> EXP
 %token<num> LOG2 LOG10
 %token<num> FLOOR CEIL ABS
 %token<num> COS SIN TAN
@@ -100,6 +101,7 @@ function:
 	| trig_function
 	| SQRT expr      { $$ = sqrt($2); }
 	| expr FACTORIAL { $$ = factorial($1); }
+	| EXP expr      { $$ = exp($1); }
 	| ABS expr       { $$ = fabs($2); }
 	| FLOOR expr     { $$ = floor($2); }
 	| CEIL expr      { $$ = ceil($2); }

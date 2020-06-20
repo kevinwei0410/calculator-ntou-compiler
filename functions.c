@@ -11,3 +11,13 @@ double factorial(double n) {
   }
   return f;
 }
+
+double exp(double x)
+{
+    int n = 10;
+    int i = n - 1;
+    double sum = 1.0;
+    for (i = n-1; i > 0; --i)
+        sum = 1.0 + x * sum / i;
+    return sum;
+}
