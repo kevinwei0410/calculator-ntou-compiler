@@ -6,6 +6,8 @@
 #include "functions.h"
 #include "yacc.tab.h"
 
+extern double variable_values[100];
+extern int variable_set[100];
 
 /* Flex functions */
 extern int yylex(void);
@@ -22,11 +24,15 @@ int yyerror(const char *s);
 %token<num> NUMBER
 %token<num> L_BRACKET R_BRACKET
 %token<num> DIV MUL ADD SUB
+%token<num> EQUALS
 %token<num> PI E
 %token<num> POW SQRT FACTORIAL MOD
 %token<num> LOG2 LOG10
 %token<num> FLOOR CEIL ABS
+%token<num> COS SIN TAN
 %token<num> EOL
+%token<num> VAR_KEYWORD 
+%token<index> VARIABLE
 %type<num> input
 %type<num> line
 %type<num> calculation
@@ -34,6 +40,8 @@ int yyerror(const char *s);
 %type<num> expr
 %type<num> function
 %type<num> logarithm
+%type<num> trig_function
+%type<num> assignment
 
 /* Set operator precedence, follows BODMAS rules. */
 %left SUB
@@ -57,6 +65,7 @@ line:
 calculation:
 	  expr
 	| function
+	| assignment
 	;
 
 constant:
@@ -68,6 +77,9 @@ expr:
 	SUB expr                  { $$ = -$2; }
 	| NUMBER                  { $$ = $1; }
 	| constant
+	| VARIABLE					{ $$ = variable_values[$1]; }
+	| constant	
+	| function
 	| expr DIV expr           {
 		if ($3 == 0) {
 			yyerror("Cannot divide by zero");
@@ -87,6 +99,7 @@ expr:
 
 function: 
 	  logarithm
+	| trig_function
 	| SQRT expr      { $$ = sqrt($2); }
 	| expr FACTORIAL { $$ = factorial($1); }
 	| ABS expr       { $$ = fabs($2); }
@@ -98,6 +111,15 @@ logarithm:
 	LOG2 expr        { $$ = log2($2); }
 	| LOG10 expr     { $$ = log10($2); }
 	;
+
+trig_function:
+	COS expr  			  { $$ = cos($2); }
+	| SIN expr 			  { $$ = sin($2); }
+	| TAN expr 			  { $$ = tan($2); }
+	;
+assignment: 
+		VAR_KEYWORD VARIABLE EQUALS calculation { $$ = set_variable($2, $4); }
+		;
 %%
 
 /* Entry point */

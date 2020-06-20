@@ -32,6 +32,7 @@ DIGIT [0-9]
 "/"                               { return DIV; }
 "%"                               { return MOD; }
 "^"                               { return POW; }
+"="                               { return EQUALS; }
 "("                               { return L_BRACKET; }
 ")"                               { return R_BRACKET; }
 "!"                               { return FACTORIAL; }
@@ -45,12 +46,12 @@ DIGIT [0-9]
 "sqrt"                            { return SQRT; }
 "log2"                            { return LOG2; }
 "log10"                           { return LOG10; }
-("cos")|("COS")					  { return COS; }
-("sin")|("SIN")					  { return SIN; }
-("tan")|("TAN")					  { return TAN; }
-("var")|("VAR")					  { return VAR_KEYWORD; }
-[a-zA-Z0-9]+  					  { yylval.index = add_variable(yytext); return VARIABLE; }
-[\n|\n\r]                            { return EOL; }
+("cos")|("COS")                   { return COS; }
+("sin")|("SIN")                   { return SIN; }
+("tan")|("TAN")                   { return TAN; }
+("var")|("VAR")                   { return VAR_KEYWORD; }
+[a-zA-Z0-9]+                      { yylval.index = add_variable(yytext); return VARIABLE; }
+[\n|\n\r]                         { return EOL; }
 .                                 {
     yyerror("Undefined symbol");
     exit(1);
