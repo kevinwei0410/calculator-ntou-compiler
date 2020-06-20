@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "yacc.tab.h"
+#include "mem.h"
 
 extern int yyerror(const char *s);
 %}
@@ -44,7 +45,12 @@ DIGIT [0-9]
 "sqrt"                            { return SQRT; }
 "log2"                            { return LOG2; }
 "log10"                           { return LOG10; }
-[\n|\n\r]                         { return EOL; }
+("cos")|("COS")					  { return COS; }
+("sin")|("SIN")					  { return SIN; }
+("tan")|("TAN")					  { return TAN; }
+("var")|("VAR")					  { return VAR_KEYWORD; }
+[a-zA-Z0-9]+  					  { yylval.index = add_variable(yytext); return VARIABLE; }
+[\n|\n\r]                            { return EOL; }
 .                                 {
     yyerror("Undefined symbol");
     exit(1);
