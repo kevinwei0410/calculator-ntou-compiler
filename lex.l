@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "yacc.tab.h"
+
+extern int yyerror(const char *s);
 %}
 
 /* Stop the error "undefined reference to 'yywrap'" from Flex */

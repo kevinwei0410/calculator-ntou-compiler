@@ -8,7 +8,7 @@ YACC = bison
 SRCS = lex.yy.c yacc.tab.c yacc.tab.h functions.c
 LDFLAGS = -lm
 
-all: flex bison
+all: bison flex
 	$(CC) -I./ $(LDFLAGS) $(SRCS) -o calculator
 
 flex: lex.l
