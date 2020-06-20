@@ -46,10 +46,9 @@ int yyerror(const char *s);
 %%
 
 input:
-	  %empty
 	| input line
 	;
-	
+
 line: 
 	  EOL              { fprintf(stdout, "Please enter a math expression:\n"); }
 	| calculation EOL  { fprintf(stdout, "= %.2f\n",$1); }
@@ -59,12 +58,12 @@ calculation:
 	  expr
 	| function
 	;
-		
+
 constant:
 	  PI { $$ = 3.141592653589793; }
 	| E  { $$ = 2.718281828459045; }
 	;
-		
+
 expr:
 	SUB expr                  { $$ = -$2; }
 	| NUMBER                  { $$ = $1; }
@@ -85,7 +84,7 @@ expr:
 	| expr MOD expr            { $$ = modulo($1, $3); }
 	| function
 	;
-		
+
 function: 
 	  logarithm
 	| SQRT expr      { $$ = sqrt($2); }
@@ -94,7 +93,7 @@ function:
 	| FLOOR expr     { $$ = floor($2); }
 	| CEIL expr      { $$ = ceil($2); }
 	;
-	
+
 logarithm:
 	LOG2 expr        { $$ = log2($2); }
 	| LOG10 expr     { $$ = log10($2); }
@@ -103,7 +102,7 @@ logarithm:
 
 /* Entry point */
 int main(int argc, char **argv)
-{		
+{
 	yyin = stdin;
 	yyparse();
 }
