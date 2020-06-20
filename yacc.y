@@ -22,7 +22,7 @@ int yyerror(const char *s);
 %token<num> NUMBER
 %token<num> L_BRACKET R_BRACKET
 %token<num> DIV MUL ADD SUB
-%token<num> PI
+%token<num> PI E
 %token<num> POW SQRT FACTORIAL MOD
 %token<num> LOG2 LOG10
 %token<num> FLOOR CEIL ABS
@@ -61,7 +61,8 @@ calculation:
 	;
 		
 constant:
-	PI { $$ = 3.141592653589793; }
+	  PI { $$ = 3.141592653589793; }
+	| E  { $$ = 2.718281828459045; }
 	;
 		
 expr:

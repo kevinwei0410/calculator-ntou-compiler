@@ -17,27 +17,35 @@ extern int yyerror(const char *s);
    . -- Match any remaining character.
 */
 
+DIGIT [0-9]
+
 %%
 [ \t]
-[0-9]+(\.[0-9]+)?                         { yylval.num = atof(yytext); return NUMBER; }
-"+"                                       { return ADD; }
-"-"                                       { return SUB; }
-"*"                                       { return MUL; }
-"/"                                       { return DIV; }
-"%"                                       { return MOD; }
-"^"                                       { return POW; }
-"("                                       { return L_BRACKET; }
-")"                                       { return R_BRACKET; }
-"!"                                       { return FACTORIAL; }
-("pi")|("PI")                             { return PI; }
-("mod")|("MOD")                           { return MOD; }
-("pow")|("POW")                           { return POW; }
-("floor")|("FLOOR")                       { return FLOOR; }
-("ceil")|("CEIL")                         { return CEIL; }
-("abs")|("ABS")                           { return ABS; }
-("sqrt")|("SQRT")                         { return SQRT; }
-("log2")|("LOG2")                         { return LOG2; }
-("log10")|("LOG10")                       { return LOG10; }
-[\n]                                      { return EOL; }
-.                                         { yyerror("Undefined symbol"); exit(1); }
+{DIGIT}+(\.{DIGIT}+)?             {
+    yylval.num = atof(yytext);
+    return NUMBER;
+}
+"+"                               { return ADD; }
+"-"                               { return SUB; }
+"*"                               { return MUL; }
+"/"                               { return DIV; }
+"%"                               { return MOD; }
+"^"                               { return POW; }
+"("                               { return L_BRACKET; }
+")"                               { return R_BRACKET; }
+"!"                               { return FACTORIAL; }
+"pi"                              { return PI; }
+"mod"                             { return MOD; }
+"pow"                             { return POW; }
+"floor"                           { return FLOOR; }
+"ceil"                            { return CEIL; }
+"abs"                             { return ABS; }
+"sqrt"                            { return SQRT; }
+"log2"                            { return LOG2; }
+"log10"                           { return LOG10; }
+[\n]                              { return EOL; }
+.                                 {
+    yyerror("Undefined symbol");
+    exit(1);
+}
 %%
