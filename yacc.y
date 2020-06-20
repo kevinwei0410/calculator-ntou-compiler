@@ -76,10 +76,7 @@ constant:
 expr:
 	SUB expr                  { $$ = -$2; }
 	| NUMBER                  { $$ = $1; }
-	| constant
-	| VARIABLE					{ $$ = variable_values[$1]; }
-	| constant	
-	| function
+	| VARIABLE                { $$ = variable_values[$1]; }
 	| expr DIV expr           {
 		if ($3 == 0) {
 			yyerror("Cannot divide by zero");
@@ -94,6 +91,7 @@ expr:
 	| expr SUB expr            { $$ = $1 - $3; }
 	| expr POW expr            { $$ = pow($1, $3); }
 	| expr MOD expr            { $$ = modulo($1, $3); }
+	| constant
 	| function
 	;
 
