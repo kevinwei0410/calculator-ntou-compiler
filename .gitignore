@@ -5,7 +5,9 @@
 *.exe
 calc*
 
-*.c
-*.h
+*.yy.c
+*.yy.h
+*.tab.c
+*.tab.h
 
 *.html
