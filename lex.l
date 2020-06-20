@@ -35,6 +35,7 @@ DIGIT [0-9]
 ")"                               { return R_BRACKET; }
 "!"                               { return FACTORIAL; }
 "pi"                              { return PI; }
+"e"                               { return E; }
 "mod"                             { return MOD; }
 "pow"                             { return POW; }
 "floor"                           { return FLOOR; }
@@ -43,7 +44,7 @@ DIGIT [0-9]
 "sqrt"                            { return SQRT; }
 "log2"                            { return LOG2; }
 "log10"                           { return LOG10; }
-[\n]                              { return EOL; }
+[\n|\n\r]                         { return EOL; }
 .                                 {
     yyerror("Undefined symbol");
     exit(1);

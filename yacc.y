@@ -103,8 +103,21 @@ logarithm:
 /* Entry point */
 int main(int argc, char **argv)
 {
-	yyin = stdin;
-	yyparse();
+	if (argc < 2) {
+		yyin = stdin;
+		yyparse();
+	}
+	else {
+		char* filename = argv[1];
+		FILE* fp = fopen(filename, "r");
+		if (fp == NULL) {
+			fprintf(stderr, "Unable to open file \"%s\"\n", filename);
+			exit(EXIT_FAILURE);
+		}
+		yyin = fp;
+		yyparse();
+		fclose(fp);
+	}
 }
 
 /* Display error messages */
