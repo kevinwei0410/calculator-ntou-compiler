@@ -24,13 +24,13 @@ int yyerror(const char *s);
 }
 
 %token<num> NUMBER
-%token<num> L_BRACKET R_BRACKET
+%token<num> L_PAREN R_PAREN
 %token<num> DIV MUL ADD SUB
 %token<num> EQUALS
 %token<num> PI E
 %token<num> POW SQRT FACTORIAL MOD
 %token<num> EXP
-%token<num> LOG2 LOG10
+%token<num> LOG LOG2 LOG10
 %token<num> FLOOR CEIL ABS
 %token<num> COS SIN TAN COT SEC CSC
 %token<num> EOL
@@ -54,7 +54,7 @@ int yyerror(const char *s);
 %left MUL 
 %left DIV 
 %left POW SQRT
-%left L_BRACKET R_BRACKET
+%left L_PAREN R_PAREN
 
 %%
 
@@ -91,7 +91,7 @@ expr:
 		}
 	}
 	| expr MUL expr            { $$ = $1 * $3; }
-	| L_BRACKET expr R_BRACKET { $$ = $2; }
+	| L_PAREN expr R_PAREN { $$ = $2; }
 	| expr ADD expr            { $$ = $1 + $3; }
 	| expr SUB expr            { $$ = $1 - $3; }
 	| expr POW expr            { $$ = pow($1, $3); }
@@ -103,35 +103,36 @@ expr:
 function: 
 	  logarithm
 	| temperature_conversion
+	| SQRT L_PAREN expr R_PAREN      { $$ = sqrt($3); }
+	| EXP L_PAREN expr R_PAREN      { $$ = exp($3); }
+	| ABS L_PAREN expr R_PAREN       { $$ = fabs($3); }
+	| FLOOR L_PAREN expr R_PAREN     { $$ = floor($3); }
+	| CEIL L_PAREN expr R_PAREN      { $$ = ceil($3); }
 	| trig_function
-	| SQRT expr      { $$ = sqrt($2); }
 	| expr FACTORIAL { $$ = factorial($1); }
-	| EXP expr      { $$ = exp($1); }
-	| ABS expr       { $$ = fabs($2); }
-	| FLOOR expr     { $$ = floor($2); }
-	| CEIL expr      { $$ = ceil($2); }
 	;
 
 logarithm:
-	LOG2 expr        { $$ = log2($2); }
-	| LOG10 expr     { $$ = log10($2); }
+	  LOG L_PAREN expr R_PAREN       { $$ = log($3); }
+	| LOG2 L_PAREN expr R_PAREN       { $$ = log2($3); }
+	| LOG10 L_PAREN expr R_PAREN    { $$ = log10($3); }
 	;
 
 temperature_conversion:
-	 CEL_TO_FAH expr      { $$ = c_to_f($2);  }
-	| FAH_TO_CEL expr	  { $$ = f_to_c($2); }
+	  CEL_TO_FAH L_PAREN expr R_PAREN     { $$ = c_to_f($3);  }
+	| FAH_TO_CEL L_PAREN expr R_PAREN     { $$ = f_to_c($3); }
 	;
 trig_function:
-	COS expr  			  { $$ = cos($2); }
-	| SIN expr 			  { $$ = sin($2); }
-	| TAN expr 			  { $$ = tan($2); }
-	| COT expr            { $$ = 1/tan($2); }  
-	| SEC expr            { $$ = 1/cos($2); }
-	| CSC expr            { $$ = 1/sin($2); }
+	  COS L_PAREN expr R_PAREN             { $$ = cos($3); }
+	| SIN L_PAREN expr R_PAREN            { $$ = sin($3); }
+	| TAN L_PAREN expr R_PAREN            { $$ = tan($3); }
+	| COT L_PAREN expr R_PAREN            { $$ = 1/tan($3); }
+	| SEC L_PAREN expr R_PAREN            { $$ = 1/cos($3); }
+	| CSC L_PAREN expr R_PAREN            { $$ = 1/sin($3); }
 	;
 assignment: 
-		VAR_KEYWORD VARIABLE EQUALS calculation { $$ = set_variable($2, $4); }
-		;
+	VAR_KEYWORD VARIABLE EQUALS calculation { $$ = set_variable($2, $4); }
+	;
 %%
 
 /* Entry point */

@@ -27,8 +27,8 @@ number {digits}(\.{digits})?([Ee][+-]?{digits})?
 "%"                               { return MOD; }
 "^"                               { return POW; }
 "="                               { return EQUALS; }
-"("                               { return L_BRACKET; }
-")"                               { return R_BRACKET; }
+"("                               { return L_PAREN; }
+")"                               { return R_PAREN; }
 "!"                               { return FACTORIAL; }
 "pi"                              { return PI; }
 "e"                               { return E; }
@@ -38,6 +38,7 @@ number {digits}(\.{digits})?([Ee][+-]?{digits})?
 "ceil"                            { return CEIL; }
 "abs"                             { return ABS; }
 "sqrt"                            { return SQRT; }
+"log"                             { return LOG; }
 "log2"                            { return LOG2; }
 "log10"                           { return LOG10; }
 ("cos")|("COS")                   { return COS; }
