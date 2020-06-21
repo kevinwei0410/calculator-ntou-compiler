@@ -18,11 +18,13 @@ extern int yyerror(const char *s);
    . -- Match any remaining character.
 */
 
-DIGIT [0-9]
+digit [0-9]
+digits {digit}+
+number {digits}(\.{digits})?([Ee][+-]?{digits})?
 
 %%
 [ \t]
-{DIGIT}+(\.{DIGIT}+)?             {
+{number}                          {
     yylval.num = atof(yytext);
     return NUMBER;
 }
