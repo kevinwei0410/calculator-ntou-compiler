@@ -13,6 +13,8 @@ extern int variable_set[100];
 extern int yylex(void);
 extern void yyterminate();
 extern FILE* yyin;
+extern int set_variable(int index, double val);
+
 int yyerror(const char *s);
 %}
 

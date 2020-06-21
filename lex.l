@@ -8,15 +8,7 @@
 extern int yyerror(const char *s);
 %}
 
-/* Stop the error "undefined reference to 'yywrap'" from Flex */
 %option noyywrap
-
-/* Grammar rules
-   [ \t] -- Match space or tab
-   [0-9]+(\.[0-9]+)?  -- Match any combination of numbers. Includes decimals.
-   [a-zA-Z0-9]+ -- Match any combination of letters (lower and upper case) and numbers.
-   . -- Match any remaining character.
-*/
 
 digit [0-9]
 digits {digit}+
