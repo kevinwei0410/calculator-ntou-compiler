@@ -30,9 +30,10 @@ int yyerror(const char *s);
 %token<num> EXP
 %token<num> LOG2 LOG10
 %token<num> FLOOR CEIL ABS
-%token<num> COS SIN TAN
+%token<num> COS SIN TAN COT SEC CSC
 %token<num> EOL
 %token<num> VAR_KEYWORD 
+%token<num> CEL_TO_FAH FAH_TO_CEL
 %token<index> VARIABLE
 %type<num> input
 %type<num> line
@@ -40,6 +41,7 @@ int yyerror(const char *s);
 %type<num> constant
 %type<num> expr
 %type<num> function
+%type<num> temperature_conversion
 %type<num> logarithm
 %type<num> trig_function
 %type<num> assignment
@@ -98,6 +100,7 @@ expr:
 
 function: 
 	  logarithm
+	| temperature_conversion
 	| trig_function
 	| SQRT expr      { $$ = sqrt($2); }
 	| expr FACTORIAL { $$ = factorial($1); }
@@ -112,10 +115,17 @@ logarithm:
 	| LOG10 expr     { $$ = log10($2); }
 	;
 
+temperature_conversion:
+	 CEL_TO_FAH expr      { $$ = c_to_f($2);  }
+	| FAH_TO_CEL expr	  { $$ = f_to_c($2); }
+	;
 trig_function:
 	COS expr  			  { $$ = cos($2); }
 	| SIN expr 			  { $$ = sin($2); }
 	| TAN expr 			  { $$ = tan($2); }
+	| COT expr            { $$ = 1/tan($2); }  
+	| SEC expr            { $$ = 1/cos($2); }
+	| CSC expr            { $$ = 1/sin($2); }
 	;
 assignment: 
 		VAR_KEYWORD VARIABLE EQUALS calculation { $$ = set_variable($2, $4); }

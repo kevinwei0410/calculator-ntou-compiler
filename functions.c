@@ -21,3 +21,7 @@ double exp(double x)
         sum = 1.0 + x * sum / i;
     return sum;
 }
+// Convert celsius to fahrenheit
+double c_to_f(double c){ return (c * 1.8) + 32; }
+// Convert fahrenheit to celsius
+double f_to_c(double f){ return (f - 32)/1.8; }
