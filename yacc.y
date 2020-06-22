@@ -84,8 +84,7 @@ expr:
 	| VARIABLE                { $$ = variable_values[$1]; }
 	| expr DIV expr           {
 		if ($3 == 0) {
-			yyerror("Cannot divide by zero");
-			exit(1);
+			$$ = NAN;
 		} else {
 			$$ = $1 / $3;
 		}
