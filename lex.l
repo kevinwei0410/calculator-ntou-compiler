@@ -13,10 +13,11 @@ extern int yyerror(const char *s);
 digit [0-9]
 digits {digit}+
 number {digits}(\.{digits})?([Ee][+-]?{digits})?
+hex (0x)?{digits}(\.{digits})?([Pp][+-]?{digits})?
 
 %%
 [ \t]
-{number}                          {
+{number}|{hex}                    {
     yylval.num = atof(yytext);
     return NUMBER;
 }
